@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { useI18n } from "@/lib/i18n/context"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -12,7 +13,7 @@ import { CopyButton } from "@/components/copy-button"
 import { ClientDate } from "@/components/client-date"
 import { RefundButton } from "@/components/admin/refund-button"
 import { toast } from "sonner"
-import { markOrderDelivered, markOrderPaid, cancelOrder, updateOrderEmail } from "@/actions/admin-orders"
+import { markOrderDelivered, markOrderPaid, cancelOrder, updateOrderEmail, deleteOrder } from "@/actions/admin-orders"
 
 function statusVariant(status: string | null) {
   switch (status) {
@@ -26,6 +27,7 @@ function statusVariant(status: string | null) {
 
 export function AdminOrderDetailContent({ order }: { order: any }) {
   const { t } = useI18n()
+  const router = useRouter()
   const [email, setEmail] = useState(order.email || '')
   const [savingEmail, setSavingEmail] = useState(false)
 
@@ -33,6 +35,7 @@ export function AdminOrderDetailContent({ order }: { order: any }) {
   const canMarkPaid = status === 'pending'
   const canMarkDelivered = status === 'paid' && !!order.cardKey
   const canCancel = status === 'pending'
+  const canDelete = true
 
   const handleStatus = async (action: 'paid' | 'delivered' | 'cancel') => {
     try {
@@ -97,6 +100,23 @@ export function AdminOrderDetailContent({ order }: { order: any }) {
             )}
             {canCancel && (
               <Button variant="destructive" onClick={() => handleStatus('cancel')}>{t('admin.orders.cancel')}</Button>
+            )}
+            {canDelete && (
+              <Button
+                variant="destructive"
+                onClick={async () => {
+                  if (!confirm(t('admin.orders.confirmDelete'))) return
+                  try {
+                    await deleteOrder(order.orderId)
+                    toast.success(t('common.success'))
+                    router.push('/admin/orders')
+                  } catch (e: any) {
+                    toast.error(e.message)
+                  }
+                }}
+              >
+                {t('admin.orders.delete')}
+              </Button>
             )}
             <RefundButton order={order} />
           </div>
@@ -176,4 +196,3 @@ export function AdminOrderDetailContent({ order }: { order: any }) {
     </div>
   )
 }
-

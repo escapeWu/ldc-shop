@@ -29,12 +29,16 @@ export default async function AdminOrdersPage({
 
     const q = (firstParam(searchParams.q) || '').trim()
     const status = (firstParam(searchParams.status) || 'all').trim()
+    const fulfillment = (firstParam(searchParams.fulfillment) || 'all').trim()
     const page = parseIntParam(firstParam(searchParams.page), 1)
     const pageSize = Math.min(parseIntParam(firstParam(searchParams.pageSize), 50), 200)
 
     const whereParts: any[] = []
     if (status !== 'all') {
         whereParts.push(eq(orders.status, status))
+    }
+    if (fulfillment === 'needsDelivery') {
+        whereParts.push(and(eq(orders.status, 'paid'), sql`${orders.cardKey} IS NULL`))
     }
     if (q) {
         const like = `%${q}%`
@@ -83,6 +87,7 @@ export default async function AdminOrdersPage({
             pageSize={pageSize}
             query={q}
             status={status}
+            fulfillment={fulfillment}
         />
     )
 }

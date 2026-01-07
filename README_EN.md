@@ -34,6 +34,7 @@ A robust, serverless virtual goods shop built with **Next.js 16**, **Vercel Post
     - 🏷️ **Category Management**: CRUD categories with icons and ordering.
     - 🗂️ **Card Inventory**: Bulk import (newline/comma) with de-duplication and delete unused card keys.
     - 💳 **Orders & Refunds**: Pagination/search/filters, order detail, mark paid/delivered/cancel, client-mode refund + optional server proxy.
+    - 🧹 **Order Cleanup**: Bulk select and bulk delete.
     - ⭐ **Review Management**: Search and delete reviews.
     - 📦 **Data Export**: Export orders/products/reviews/settings; full dump JSON + D1 SQL.
     - 📣 **Announcements**: Homepage announcement management.

@@ -68,11 +68,13 @@ export async function GET(req: Request) {
   const includeSecrets = searchParams.get("includeSecrets") === "1"
   const q = (searchParams.get("q") || "").trim()
   const status = (searchParams.get("status") || "all").trim()
+  const fulfillment = (searchParams.get("fulfillment") || "all").trim()
 
   try {
     if (type === "orders") {
       const whereParts: any[] = []
       if (status !== 'all') whereParts.push(eq(orders.status, status))
+      if (fulfillment === 'needsDelivery') whereParts.push(and(eq(orders.status, 'paid'), sql`${orders.cardKey} IS NULL`))
       if (q) {
         const like = `%${q}%`
         whereParts.push(or(
