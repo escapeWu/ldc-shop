@@ -320,7 +320,7 @@
             "refundInfo": "After verifying the refund was successful, click 'Mark Refunded'",
             "refundVerify": "Have you confirmed on the payment platform that the refund is complete?",
             "checkStatus": "Check Status",
-            "verifySuccessRefunded": "Verified: Order has been refunded.",
+            "verifySuccessRefunded": "Refund verified successfully!",
             "verifyInfoPaid": "Verified: Order is Paid (Active).",
             "verifyStatus": "Status Verified"
         },
