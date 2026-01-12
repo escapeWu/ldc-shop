@@ -381,7 +381,7 @@
             "imageLabel": "图片地址",
             "imagePlaceholder": "https://...",
             "saveButton": "保存商品",
-            "purchaseLimitLabel": "限购数量",
+            "purchaseLimitLabel": "限购数量（累计）",
             "purchaseLimitPlaceholder": "不填或 0 为无限购",
             "saving": "保存中..."
         }
