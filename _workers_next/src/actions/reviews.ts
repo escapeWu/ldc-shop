@@ -94,6 +94,7 @@ export async function submitReview(
         revalidatePath(`/order/${orderId}`)
         revalidatePath(`/`)
         revalidateTag('home:ratings')
+        revalidateTag('home:products')
 
         return { success: true }
     } catch (error) {
